@@ -1,0 +1,128 @@
+{
+  "name": "rs2asm",
+  "scopeName": "source.rs2asm",
+  "patterns": [
+    {
+      "include": "#single-line-comment-consuming-line-ending"
+    },
+    {
+      "include": "#header"
+    },
+    {
+      "include": "#label"
+    },
+    {
+      "include": "#function"
+    }
+  ],
+  "repository": {
+    "single-line-comment-consuming-line-ending": {
+      "name": "comment.line.semicolon.rs2asm",
+      "begin": "(^[ \\t]+)?((;)(?:\\s*((@)internal)(?=\\s|$))?)",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.whitespace.comment.leading.rs2asm"
+        },
+        "2": {
+          "name": "comment.line.semicolon.rs2asm"
+        },
+        "3": {
+          "name": "punctuation.definition.comment.rs2asm"
+        }
+      },
+      "end": "(?=^)",
+      "contentName": "comment.line.semicolon.rs2asm"
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "match": "((?:[ \t]+)(-?\\d+))",
+          "name": "constant.numeric.decimal.rs2asm"
+        }
+      ]
+    },
+    "header": {
+      "patterns": [
+        { 
+          "name": "meta.declaration.header.rs2asm",
+          "begin": "((?:^[ \t]*)(.id|.int_stack_count|.string_stack_count|.int_var_count|.string_var_count))",
+          "beginCaptures":{
+            "2": {"name":"storage.type.int.rs2asm"}
+          },
+          "end": "(?=[^\\d \t])",
+          "comment": "rs2asm header.",
+          "patterns": [
+            {
+              "include": "#numbers"
+            }
+          ]
+        }
+      ]
+    },
+    "function": {
+      "patterns": [
+        { 
+          "name": "support.function.any-method.rs2asm",
+          "begin": "^((?:[ \t]*)(\\w+))",
+          "beginCaptures":{
+            "2": {"name":"support.function.any-method.rs2asm"}
+          },
+          "comment": "rs2asm functions/symbols.",
+          "end": "(?=[$;\n\r])",
+          "patterns": [
+            {
+              "include": "#numbers"
+            },
+            {
+              "include": "#strings"
+            },
+            {
+              "name": "label.rs2asm",
+              "match": "((?:[ \t]+)(\\w+))",
+              "captures":{
+                "2": {"name":"keyword.label.rs2asm"}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "begin": "\"",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.begin.rs2asm"
+            }
+          },
+          "end": "\"",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.end.rs2asm"
+            }
+          },
+          "name": "string.quoted.double.rs2asm",
+          "patterns": [
+            {
+              "match": "\\\\.",
+              "name": "constant.character.escape.rs2asm"
+            }
+          ]
+        }
+      ]
+    },
+    "label": {
+      "patterns": [
+        { 
+          "name": "label.rs2asm",
+          "match": "((?:^[ \t]*)(\\w+:))",
+          "captures": {
+            "2": {"name":"keyword.label.rs2asm"}
+          },
+          "comment": "rs2asm label/symbols."
+        }
+      ]
+    }
+  }
+}

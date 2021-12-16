@@ -1,0 +1,25 @@
+{
+    "name": "rs2asm",
+    "displayName": "rs2asm",
+    "description": "rs2asm support for Visual Studio Code",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.63.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "rs2asm",
+            "aliases": ["rs2asm", "rs2asm"],
+            "extensions": [".rs2asm"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "rs2asm",
+            "scopeName": "source.rs2asm",
+            "path": "./syntaxes/rs2asm.tmLanguage.json"
+        }]
+    }
+}
